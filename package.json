@@ -1,0 +1,18 @@
+{
+	"name": "plain-merge",
+	"version": "1.0.0",
+	"description": "Merge plain JavaScript objects.",
+	"main": "index.js",
+	"author": {
+		"name": "Tyler Johnson",
+		"url": "https://github.com/tyler-johnson"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/tyler-johnson/plain-merge.git"
+	},
+	"dependencies": {
+		"is-plain-object": "~2.0.0"
+	},
+	"license": "MIT"
+}
