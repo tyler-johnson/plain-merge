@@ -16,7 +16,7 @@ var merge = module.exports = function(obj, val, safe) {
 
 // keeping it DRY
 function mergeAll(safe, obj) {
-	args = slice.call(arguments, 2);
+	var args = slice.call(arguments, 2);
 	for (var i = 0; i < args.length; i++) {
 		obj = merge(obj, args[i], safe);
 	}
