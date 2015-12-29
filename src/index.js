@@ -3,7 +3,7 @@ var has = (o, p) => Object.prototype.hasOwnProperty.call(o, p);
 var toArray = (v) => Array.prototype.slice.call(v, 0);
 
 export default function merge(a, b, safe) {
-	let val;
+	let val, isobj;
 
 	// resolve (a) value
 	if (isPlainObject(a)) {
@@ -12,16 +12,20 @@ export default function merge(a, b, safe) {
 			if (!has(a, k)) continue;
 			val[k] = a[k];
 		}
+		isobj = true;
 	}
 	else {
 		val = a;
+		isobj = false;
 	}
+
+	let undef = typeof val === "undefined";
 
 	// merge in (b) value
 	if (typeof b !== "undefined") {
 		if (isPlainObject(b)) {
-			if (!isPlainObject(val)) {
-				if (safe) return val;
+			if (!isobj) {
+				if (safe && !undef) return val;
 				val = {};
 			}
 
@@ -30,7 +34,7 @@ export default function merge(a, b, safe) {
 				val[k] = merge(val[k], b[k], safe);
 			}
 		}
-		else if (!safe) {
+		else if (!safe || undef) {
 			val = b;
 		}
 	}
@@ -40,8 +44,8 @@ export default function merge(a, b, safe) {
 
 // keeping it DRY
 function mergeAll(safe, obj) {
-	var args = toArray(arguments).slice(2);
-	for (var i = 0; i < args.length; i++) {
+	let args = toArray(arguments).slice(2);
+	for (let i = 0; i < args.length; i++) {
 		obj = merge(obj, args[i], safe);
 	}
 	return obj;
